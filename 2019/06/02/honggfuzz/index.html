@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="honggfuzz,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="fuzzing工具之honggfuzz的安装与使用honggfuzz介绍：honggfuzz是由谷歌开发的，和AFL（点击这里查看AFL的安装与使用）类似，的反馈驱动，使用遗传算法来变异的fuzzer。 honggfuzz是一个多进程和多线程的fuzzer，所以用honggfuzz进行fuzzing的速度非常快，在安全漏洞发现中的表现十分突出。 honggfuzz的安装与使用和AFL类似，我们首先">
+<meta name="keywords" content="honggfuzz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fuzzing工具之honggfuzz的安装与使用">
+<meta property="og:url" content="https://batgui.github.io/2019/06/02/honggfuzz/index.html">
+<meta property="og:site_name" content="Importsys Blog">
+<meta property="og:description" content="fuzzing工具之honggfuzz的安装与使用honggfuzz介绍：honggfuzz是由谷歌开发的，和AFL（点击这里查看AFL的安装与使用）类似，的反馈驱动，使用遗传算法来变异的fuzzer。 honggfuzz是一个多进程和多线程的fuzzer，所以用honggfuzz进行fuzzing的速度非常快，在安全漏洞发现中的表现十分突出。 honggfuzz的安装与使用和AFL类似，我们首先">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773661-82865e00-85f0-11e9-9956-18fe085f4339.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773663-831ef480-85f0-11e9-8c4f-5590991faacc.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773659-81edc780-85f0-11e9-82b8-a6efd74b4331.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773660-82865e00-85f0-11e9-882c-ed797dc5e545.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773664-831ef480-85f0-11e9-9c32-34ee33ebfbe1.png">
+<meta property="og:updated_time" content="2019-06-03T03:13:01.334Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fuzzing工具之honggfuzz的安装与使用">
+<meta name="twitter:description" content="fuzzing工具之honggfuzz的安装与使用honggfuzz介绍：honggfuzz是由谷歌开发的，和AFL（点击这里查看AFL的安装与使用）类似，的反馈驱动，使用遗传算法来变异的fuzzer。 honggfuzz是一个多进程和多线程的fuzzer，所以用honggfuzz进行fuzzing的速度非常快，在安全漏洞发现中的表现十分突出。 honggfuzz的安装与使用和AFL类似，我们首先">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/20705797/58773661-82865e00-85f0-11e9-9956-18fe085f4339.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://batgui.github.io/2019/06/02/honggfuzz/">
+
+
+
+
+
+  <title>fuzzing工具之honggfuzz的安装与使用 | Importsys Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Importsys Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I love yueyue</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://batgui.github.io/2019/06/02/honggfuzz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="importsys">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ai1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Importsys Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">fuzzing工具之honggfuzz的安装与使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T12:07:17+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fuzzing/" itemprop="url" rel="index">
+                    <span itemprop="name">fuzzing</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="fuzzing工具之honggfuzz的安装与使用"><a href="#fuzzing工具之honggfuzz的安装与使用" class="headerlink" title="fuzzing工具之honggfuzz的安装与使用"></a>fuzzing工具之honggfuzz的安装与使用</h2><h3 id="honggfuzz介绍："><a href="#honggfuzz介绍：" class="headerlink" title="honggfuzz介绍："></a>honggfuzz介绍：</h3><p>honggfuzz是由谷歌开发的，和AFL（<a href="https://blog.csdn.net/qq_31027515/article/details/90672554" target="_blank" rel="noopener">点击这里查看AFL的安装与使用</a>）类似，的反馈驱动，使用遗传算法来变异的fuzzer。</p>
+<p>honggfuzz是一个多进程和多线程的fuzzer，所以用honggfuzz进行fuzzing的速度非常快，在安全漏洞发现中的表现十分突出。</p>
+<h3 id="honggfuzz的安装与使用"><a href="#honggfuzz的安装与使用" class="headerlink" title="honggfuzz的安装与使用"></a>honggfuzz的安装与使用</h3><p>和AFL类似，我们首先从github上下载honggfuzz。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773661-82865e00-85f0-11e9-9956-18fe085f4339.png" alt="git"><br>然后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>来安装honggfuzz</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773663-831ef480-85f0-11e9-8c4f-5590991faacc.png" alt="make"></p>
+<h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>在安装好honggfuzz之后，我们就可以来fuzzing程序了，但是在fuzzing程序之前，我们需要对程序进行插桩。运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure CC=&quot;hfuzz-gcc&quot; CXX=&quot;hfuzz-g++&quot;</span><br></pre></td></tr></table></figure>
+
+<p>就可以完成对程序进行插桩。</p>
+<p>以tiff软件为例，我们可以运行下面的命令对程序进行插桩，然后运行<em>make;make install</em>命令安装tiff软件。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773659-81edc780-85f0-11e9-82b8-a6efd74b4331.png" alt="compile"></p>
+<p>然后我们就可以fuzzing程序了。<br>其中 <strong>-f</strong> 选项是fuzzer的初始输入，tiff_seed文件夹中包含了很多tiff格式的文件。下图是fuzzing代码。<br><img src="https://user-images.githubusercontent.com/20705797/58773660-82865e00-85f0-11e9-882c-ed797dc5e545.png" alt="fuzz"><br>其中 <strong>-f</strong> 选项后面指向程序的输入文件夹。<br><strong>-w</strong> 之后跟的是程序的输出结果。</p>
+<p><strong>-t</strong> 选项设定timeout</p>
+<p><strong>–run-time</strong> 选项制定fuzzer运行的时间</p>
+<p><strong>-z</strong> 表示采用插桩模式，对源码进插桩<br><strong>__FILE __</strong>: 相当于AFL中的@@, 在运行时被程序的输入文件替换。</p>
+<p>下图所示是执行完上图脚本后的fuzzing的面板。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773664-831ef480-85f0-11e9-9c32-34ee33ebfbe1.png" alt="panel"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/honggfuzz/" rel="tag"># honggfuzz</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/angora/" rel="next" title="fuzzing工具之Angora的安装与使用">
+                <i class="fa fa-chevron-left"></i> fuzzing工具之Angora的安装与使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/03/82. Remove Duplicates from Sorted List II/" rel="prev" title="Leetcode 82. Remove Duplicates from Sorted List II 删除排序链表中的重复元素 II">
+                Leetcode 82. Remove Duplicates from Sorted List II 删除排序链表中的重复元素 II <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ai1.jpg" alt="importsys">
+            
+              <p class="site-author-name" itemprop="name">importsys</p>
+              <p class="site-description motion-element" itemprop="description">zjuer</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fuzzing工具之honggfuzz的安装与使用"><span class="nav-number">1.</span> <span class="nav-text">fuzzing工具之honggfuzz的安装与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#honggfuzz介绍："><span class="nav-number">1.1.</span> <span class="nav-text">honggfuzz介绍：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#honggfuzz的安装与使用"><span class="nav-number">1.2.</span> <span class="nav-text">honggfuzz的安装与使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进行fuzzing"><span class="nav-number">1.3.</span> <span class="nav-text">进行fuzzing</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">importsys</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+  Visited <span id="busuanzi_value_site_pv"></span> Times
+</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </footer></div>
+    
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>

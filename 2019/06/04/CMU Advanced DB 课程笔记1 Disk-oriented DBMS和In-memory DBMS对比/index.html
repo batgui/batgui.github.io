@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CMU Advanced DB course,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Disk-oriented DBMS和In-memory DBMS对比&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 数据库管理系统被创建之初，硬件设施是很简陋的，当时的CPU只有一核，RAM严重不足，数据库需要被存在硬盘中去，并且访问硬盘的速度极其的慢，当时数据库很大一部分都是在做将数据从硬盘和内存之间来回移动的工作。 &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 但是现在DR">
+<meta name="keywords" content="CMU Advanced DB course">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU Advanced DB 课程笔记#1：Disk-oriented DBMS和In-memory DBMS对比">
+<meta property="og:url" content="https://batgui.github.io/2019/06/04/CMU Advanced DB 课程笔记1 Disk-oriented DBMS和In-memory DBMS对比/index.html">
+<meta property="og:site_name" content="Importsys Blog">
+<meta property="og:description" content="Disk-oriented DBMS和In-memory DBMS对比&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 数据库管理系统被创建之初，硬件设施是很简陋的，当时的CPU只有一核，RAM严重不足，数据库需要被存在硬盘中去，并且访问硬盘的速度极其的慢，当时数据库很大一部分都是在做将数据从硬盘和内存之间来回移动的工作。 &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 但是现在DR">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58792522-ee83b900-8626-11e9-9dd8-03f4c82aa57a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58792521-edeb2280-8626-11e9-91d3-8d6ec115e0b6.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58792525-efb4e600-8626-11e9-91ae-ee3c8557115e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58792524-ef1c4f80-8626-11e9-917d-133fb2aa8547.png">
+<meta property="og:updated_time" content="2019-06-04T01:59:16.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMU Advanced DB 课程笔记#1：Disk-oriented DBMS和In-memory DBMS对比">
+<meta name="twitter:description" content="Disk-oriented DBMS和In-memory DBMS对比&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 数据库管理系统被创建之初，硬件设施是很简陋的，当时的CPU只有一核，RAM严重不足，数据库需要被存在硬盘中去，并且访问硬盘的速度极其的慢，当时数据库很大一部分都是在做将数据从硬盘和内存之间来回移动的工作。 &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 但是现在DR">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/20705797/58792522-ee83b900-8626-11e9-9dd8-03f4c82aa57a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://batgui.github.io/2019/06/04/CMU Advanced DB 课程笔记1 Disk-oriented DBMS和In-memory DBMS对比/">
+
+
+
+
+
+  <title>CMU Advanced DB 课程笔记#1：Disk-oriented DBMS和In-memory DBMS对比 | Importsys Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Importsys Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I love yueyue</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://batgui.github.io/2019/06/04/CMU Advanced DB 课程笔记1 Disk-oriented DBMS和In-memory DBMS对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="importsys">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ai1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Importsys Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CMU Advanced DB 课程笔记#1：Disk-oriented DBMS和In-memory DBMS对比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-04T09:59:28+08:00">
+                2019-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Disk-oriented-DBMS和In-memory-DBMS对比"><a href="#Disk-oriented-DBMS和In-memory-DBMS对比" class="headerlink" title="Disk-oriented DBMS和In-memory DBMS对比"></a>Disk-oriented DBMS和In-memory DBMS对比</h1><p>&nbsp; &nbsp; &nbsp; &nbsp; 数据库管理系统被创建之初，硬件设施是很简陋的，当时的CPU只有一核，RAM严重不足，数据库需要被存在硬盘中去，并且访问硬盘的速度极其的慢，当时数据库很大一部分都是在做将数据从硬盘和内存之间来回移动的工作。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; 但是现在DRAM的存储空间越来越大，许多数据库都可以直接被放进内存中去（除了数据仓库等等），所以频繁访问硬盘所造成的低性能已经不能忽视了，In-memory DBMS开始兴起。</p>
+<h2 id="Disk-oriented-DBMS介绍"><a href="#Disk-oriented-DBMS介绍" class="headerlink" title="Disk-oriented DBMS介绍"></a>Disk-oriented DBMS介绍</h2><h3 id="读数据操作"><a href="#读数据操作" class="headerlink" title="读数据操作"></a>读数据操作</h3><p>&nbsp; &nbsp; &nbsp; &nbsp; Disk-oriented DBMS:数据库的主要存贮地方是非易失性存储器（non-volatile storage）比如磁盘或者固态硬盘。当系统需要读取数据的时候，DB总是假定数据不在内存中，而在磁盘中，DB需要从磁盘中拿数据。</p>
+<p>###<br>&nbsp; &nbsp; &nbsp; &nbsp;数据库在磁盘中由固定大小的slotted pages组成，pages里面包含存入的数据（tuple）。当数据从磁盘中取出的时候，我们先把数据放在In-memory buffer pool中缓存起来。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;In-memory buffer pool是数据库直接操作的对象，我们对buffer pool处理过后，数据才会被写到磁盘中。buffer pool manager负责数据在磁盘和内存之间的移动。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;当query需要访问一个page时，DBMS先检查看看这个page是否已经在内存中，如果不在,DBMS就把数据从磁盘中取出来，拷贝到buffer pool中。如果buffer pool满了，DBMS需要回收pages。如果回收的pages是脏的，DBMS需要把这个page写到磁盘中。当page在内存中的时候，DMBS返回指向内存中pages的指针。<br><img src="https://user-images.githubusercontent.com/20705797/58792522-ee83b900-8626-11e9-9dd8-03f4c82aa57a.png" alt="data organization "></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;如上图所示，假设我们做一次数据库查询，我们搜索索引来找到一个特定的数据（tuple），我们遍历索引的B+树到叶子节点，得到一个指向page id和slot number的指针。然后我们根据page id查找page table。page table 里面存的数据如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page table： page id -&gt; frame(in buffer pool)</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp;假设page table里面没有我们需要的page id，并且page table满了，那么此时我们需要做两件事，一个是在page table中回收一个pages，然后从硬盘中把需要的数据拿到buffer pool中去，在做这个操作的时候我们需要对page table上锁，保证不出现竞争条件。同时对于回收的那条page 我们也需要上锁，保证在回收过程中没人操作它。    最后我们更新page table的数据，令page id指向新数据。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;传统的Disk-oriented DBMS有很多缺点，比如说每次DB要访问数据的时候，一定要经过buffer pool manager把数据从硬盘拿到内存中去，这个过程很慢（需要加锁防止竞争）。并且每次访问数据的时候都要经过page table把page id转化为buffer pool里面的数据。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;在传统的Disk-oriented DBMS,系统假定当一个transaction访问不在内存中的数据时会随时暂停。所以在这个过程中需要加锁来保证数据库的<a href="https://en.wikipedia.org/wiki/ACID_(computer_science)" target="_blank" rel="noopener">ACID</a>特性。这些（放在内存中的）加锁信息被存储在另外的数据结构中，用来记录哪条transaction对哪条数据加什么类型的锁。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;对于In-memory DBMS 数据库的锁和数据存储在一起，不需要去另外的数据结构中查看加锁信息。</p>
+<h3 id="日志和恢复机制：STEAL-NO-FORCE-policy"><a href="#日志和恢复机制：STEAL-NO-FORCE-policy" class="headerlink" title="日志和恢复机制：STEAL + NO-FORCE policy."></a>日志和恢复机制：STEAL + NO-FORCE policy.</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;STEAL的意思是被没有commit的transaction修改的page可以被写入硬盘，反之NO-STEAL就是不被允许写入硬盘。FORCE的意思是当transaction被commited后，buffer pool里面的所有dirty pages都要被flush到硬盘中，反之NO-FORCE就是不用flush到硬盘中。数据库通过写前日志（WAL）来实现这个机制。<br>&nbsp; &nbsp; &nbsp; &nbsp;下图是各个policy之间效率的对比图，可以看出STEAL + NO-FORCE policy速度最快，但是database从崩溃到恢复所需要的时间也最长。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58792521-edeb2280-8626-11e9-91d3-8d6ec115e0b6.png" alt="bufferpool policy"></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;可以从下图看到，Disk oriented DB真正有用的工作只占CPU 7%的工作时间，大部分时间都花在buffer pool还有加锁的过程中。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58792525-efb4e600-8626-11e9-91ae-ee3c8557115e.png" alt="measureCPU"><br>这就引出了In-memory DBMS。In-memory DBMS假定数据存储在内存中的。</p>
+<h2 id="In-memory-DBMS介绍"><a href="#In-memory-DBMS介绍" class="headerlink" title="In-memory DBMS介绍"></a>In-memory DBMS介绍</h2><h3 id="数据组织形式"><a href="#数据组织形式" class="headerlink" title="数据组织形式"></a>数据组织形式</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;In-memory DBMS 将数据以block的形式组织起来，并把定长的数据和不定长的数据分开存储。<br><img src="https://user-images.githubusercontent.com/20705797/58792524-ef1c4f80-8626-11e9-917d-133fb2aa8547.png" alt="inmem data organization"><br>&nbsp; &nbsp; &nbsp; &nbsp;如上图所示当我们想要访问一条数据时，我们从遍历index得到数据的block id和offset，我们可以用id和offset直接找到我们想到的数据。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;In-memory database 把锁和数据存在一起，可以更快的判断数据有没有上锁。而disk-oriented databse把锁和数据分开来存。</p>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;B+树在In-memory DB中仍然是建立索引比较不错的数据结构。与disk oriented DB不同的是，In-memory database不会将更新索引的log写入到磁盘中，而是在计算机重启后从硬盘中载入整个数据库的时候重新建立索引，而disk oriented DB在更新数据的时候会将更新索引的log写入到磁盘中，来减少数据库恢复所需要的时间。</p>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;和disk oriented DB不同，顺序扫描比随机扫描快不了多少，并且tuple-at-a-time iterator model不适用，因为函数调用overhead太多会导致速度很慢。</p>
+<h3 id="日志和恢复"><a href="#日志和恢复" class="headerlink" title="日志和恢复"></a>日志和恢复</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;In-memory DB也需要写前日志（WAL），但需要记录的东西少很多，比如说不需要记录redo操作和LSN。为了加快恢复速度，In-memory DB也需要不定时的对数据库进行checkpoint操作。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CMU-Advanced-DB-course/" rel="tag"># CMU Advanced DB course</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/03/83. Remove Duplicates from Sorted List/" rel="next" title="Leetcode 83. Remove Duplicates from Sorted List 删除排序链表中的重复元素">
+                <i class="fa fa-chevron-left"></i> Leetcode 83. Remove Duplicates from Sorted List 删除排序链表中的重复元素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/04/726. Number of Atoms 原子的数量/" rel="prev" title="726. Number of Atoms 原子的数量">
+                726. Number of Atoms 原子的数量 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ai1.jpg" alt="importsys">
+            
+              <p class="site-author-name" itemprop="name">importsys</p>
+              <p class="site-description motion-element" itemprop="description">zjuer</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Disk-oriented-DBMS和In-memory-DBMS对比"><span class="nav-number">1.</span> <span class="nav-text">Disk-oriented DBMS和In-memory DBMS对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk-oriented-DBMS介绍"><span class="nav-number">1.1.</span> <span class="nav-text">Disk-oriented DBMS介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读数据操作"><span class="nav-number">1.1.1.</span> <span class="nav-text">读数据操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志和恢复机制：STEAL-NO-FORCE-policy"><span class="nav-number">1.1.2.</span> <span class="nav-text">日志和恢复机制：STEAL + NO-FORCE policy.</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#In-memory-DBMS介绍"><span class="nav-number">1.2.</span> <span class="nav-text">In-memory DBMS介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据组织形式"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据组织形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引"><span class="nav-number">1.2.2.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询"><span class="nav-number">1.2.3.</span> <span class="nav-text">查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志和恢复"><span class="nav-number">1.2.4.</span> <span class="nav-text">日志和恢复</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">importsys</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+  Visited <span id="busuanzi_value_site_pv"></span> Times
+</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </footer></div>
+    
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>

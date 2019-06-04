@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="server,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Netty：简易Http Webserver编写Netty 介绍Netty 是一个基于NIO的客户、服务器端编程框架。使用Netty可以使我们快速简单的开发网络应用。 Netty有很多功能，我们可以用Netty作为RPC框架，实现远程过程的调用；也可以编写长连接的服务器，使用websocket等功能；我们还可以把Netty当做http服务器（类似Tomcat），对http请求进行接收和响应。用Ne">
+<meta name="keywords" content="server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty：简易Http Webserver编写">
+<meta property="og:url" content="https://batgui.github.io/2019/06/02/netty编写建议webserver/index.html">
+<meta property="og:site_name" content="Importsys Blog">
+<meta property="og:description" content="Netty：简易Http Webserver编写Netty 介绍Netty 是一个基于NIO的客户、服务器端编程框架。使用Netty可以使我们快速简单的开发网络应用。 Netty有很多功能，我们可以用Netty作为RPC框架，实现远程过程的调用；也可以编写长连接的服务器，使用websocket等功能；我们还可以把Netty当做http服务器（类似Tomcat），对http请求进行接收和响应。用Ne">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773203-c2e4dc80-85ee-11e9-8e95-06965ca39eb4.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773201-c24c4600-85ee-11e9-9c95-fdd477dfc6fb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773212-c4aea000-85ee-11e9-85d9-df4aa23a65f9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773200-c24c4600-85ee-11e9-9317-15674d51e97d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773204-c2e4dc80-85ee-11e9-8e51-3a5258122317.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773208-c4160980-85ee-11e9-914f-1136ac653177.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773210-c4160980-85ee-11e9-9805-8abe59ebbe92.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773206-c37d7300-85ee-11e9-9ffd-e2a4aa641699.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773205-c37d7300-85ee-11e9-92eb-44c10a06b8fd.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/20705797/58773213-c5473680-85ee-11e9-84b4-4cf64997d61c.png">
+<meta property="og:updated_time" content="2019-06-03T03:04:18.978Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Netty：简易Http Webserver编写">
+<meta name="twitter:description" content="Netty：简易Http Webserver编写Netty 介绍Netty 是一个基于NIO的客户、服务器端编程框架。使用Netty可以使我们快速简单的开发网络应用。 Netty有很多功能，我们可以用Netty作为RPC框架，实现远程过程的调用；也可以编写长连接的服务器，使用websocket等功能；我们还可以把Netty当做http服务器（类似Tomcat），对http请求进行接收和响应。用Ne">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/20705797/58773203-c2e4dc80-85ee-11e9-8e95-06965ca39eb4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://batgui.github.io/2019/06/02/netty编写建议webserver/">
+
+
+
+
+
+  <title>Netty：简易Http Webserver编写 | Importsys Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Importsys Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I love yueyue</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://batgui.github.io/2019/06/02/netty编写建议webserver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="importsys">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ai1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Importsys Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Netty：简易Http Webserver编写</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T12:06:18+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Netty/" itemprop="url" rel="index">
+                    <span itemprop="name">Netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Netty：简易Http-Webserver编写"><a href="#Netty：简易Http-Webserver编写" class="headerlink" title="Netty：简易Http Webserver编写"></a>Netty：简易Http Webserver编写</h2><h3 id="Netty-介绍"><a href="#Netty-介绍" class="headerlink" title="Netty 介绍"></a>Netty 介绍</h3><p>Netty 是一个基于NIO的客户、服务器端编程框架。使用Netty可以使我们快速简单的开发网络应用。</p>
+<p>Netty有很多功能，我们可以用Netty作为RPC框架，实现远程过程的调用；也可以编写长连接的服务器，使用websocket等功能；我们还可以把Netty当做http服务器（类似Tomcat），对http请求进行接收和响应。用Netty编写服务器时，采取的编程模型和获取请求模型不遵循serlvet规范，Netty有自己一套处理方式。</p>
+<p>下面我们进行一段简易HttpServer的编写（作者使用Intellij IDEA进行Netty项目的开发）。</p>
+<h3 id="创建Netty工程"><a href="#创建Netty工程" class="headerlink" title="创建Netty工程"></a>创建Netty工程</h3><p>打开IDEA，创建一个gradle项目。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773203-c2e4dc80-85ee-11e9-8e95-06965ca39eb4.png" alt="netty工程创建"></p>
+<p>点击下一步，输入GroupID（公司域名反转）和ArtifactID（模块名）</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773201-c24c4600-85ee-11e9-9c95-fdd477dfc6fb.png" alt="groupid"></p>
+<p>然后一直点下一步直到FInished。</p>
+<p>至此我们便创建了一个工程，工程目录如下图所示：</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773212-c4aea000-85ee-11e9-85d9-df4aa23a65f9.png" alt="工程目录"><br>我们在src/main/java文件夹中编写应用代码,src/test中是我们编写测试文件用的，本文忽略测试文件。</p>
+<h3 id="导入netty-jar包"><a href="#导入netty-jar包" class="headerlink" title="导入netty jar包"></a>导入netty jar包</h3><p>导入netty jar包的过程很简单，我们可以在build.gradle文件的dependencies下加入下面一行代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile group: &apos;io.netty&apos;, name: &apos;netty-all&apos;, version: &apos;4.1.36.Final&apos;</span><br></pre></td></tr></table></figure>
+
+<p>如下图所示<br><img src="https://user-images.githubusercontent.com/20705797/58773200-c24c4600-85ee-11e9-9317-15674d51e97d.png" alt="dependencies"><br>最新引入netty的代码可以在<a href="https://mvnrepository.com/artifact/io.netty/netty-all" target="_blank" rel="noopener">maven repository</a>中通过搜索netty all关键词找到。</p>
+<p>然后我们就可以进行HttpServer的编写了。</p>
+<h3 id="Server编写"><a href="#Server编写" class="headerlink" title="Server编写"></a>Server编写</h3><p>右击src/main/java文件夹，new一个新的package，如下图所示。</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773204-c2e4dc80-85ee-11e9-8e51-3a5258122317.png" alt="newpackage"><br>然后在这个package中创建一个class名为<strong>TestServer</strong><br><img src="https://user-images.githubusercontent.com/20705797/58773208-c4160980-85ee-11e9-914f-1136ac653177.png" alt="TestServer"></p>
+<p>在TestServer class中创建<strong>main</strong>函数,在<strong>main</strong>函数里面我们创建两个<strong>NioEventLoopGroup</strong>,分别为bossGroup，workerGroup。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br></pre></td></tr></table></figure>
+
+<p>bossGroup接受连接请求并把请求交给workerGroup处理;workerGroup获取请求参数,进行业务处理，然后把结果返回客户端。</p>
+<p>然后创建<strong>ServerBootstrap</strong> 类的实例，<strong>ServerBootstrap</strong> 是简化服务端启动的类。该类通过反射的形式创建NioServerSocketChannel。</p>
+<p>channel相当于链接，同用户端进行网络连接、关闭和读写。</p>
+<p>最后调用<strong>ChildHandler</strong>方法，里面传入一个对请求进行处理的类，在本例代码中我们传入我们编写的<strong>TestServerInitializer</strong>实例（请看下一节）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ServerBootstrap serverBootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">            serverBootstrap.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class)</span><br><span class="line">                    .childHandler(<span class="keyword">new</span> TestServerInitializer());</span><br></pre></td></tr></table></figure>
+
+<p>然后我们把这个服务器绑定在8888端口上，就可以接受用户端的请求了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ChannelFuture channelFuture = serverBootstrap.bind(<span class="number">8888</span>).sync();</span><br><span class="line">channelFuture.channel().closeFuture().sync();</span><br></pre></td></tr></table></figure>
+
+<p>完整代码如下图所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            ServerBootstrap serverBootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">            serverBootstrap.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class)</span><br><span class="line">                    .childHandler(<span class="keyword">new</span> TestServerInitializer());</span><br><span class="line">            ChannelFuture channelFuture = serverBootstrap.bind(<span class="number">8888</span>).sync();</span><br><span class="line">            channelFuture.channel().closeFuture().sync();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            bossGroup.shutdownGracefully();</span><br><span class="line">            workerGroup.shutdownGracefully();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ServerInitializer编写"><a href="#ServerInitializer编写" class="headerlink" title="ServerInitializer编写"></a>ServerInitializer编写</h3><p><img src="https://user-images.githubusercontent.com/20705797/58773210-c4160980-85ee-11e9-9805-8abe59ebbe92.png" alt="TestServerINitializer"><br>在同一个package中创建<strong>TestServerInitializer</strong>类，该类需要继承<strong>ChannelInitializer</strong>类，同时需要实现<strong>initChannel</strong>方法。</p>
+<p>在连接被注册的时候，即<strong>ChannelInitializer</strong>被创建时会立即调用<strong>initChannel</strong>方法。</p>
+<p>我们在该方法中创建一个pipeline。<strong>ChannelHandler</strong> 类似过滤器；<strong>ChannelPipeline</strong> 是管道，由多个channel handle共同构成。<strong>ChannelHandler</strong> 和<strong>ChannelPipeline</strong> 用于channel事件的拦截和处理。</p>
+<p>在这个管道中我们先加入<strong>HttpServerCodec</strong>。<strong>HttpServerCodec</strong> 是一个用于对web请求进行编解码操作的Channelhandler。然后我们再加入<strong>TestHttpServerHandler</strong>（请看下一节），这个handler是一个我们自己编写用于对请求进行操作的类。</p>
+<p>具体代码如下图所示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServerInitializer</span> <span class="keyword">extends</span> <span class="title">ChannelInitializer</span>&lt;<span class="title">SocketChannel</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ChannelPipeline pipeline = ch.pipeline();</span><br><span class="line">        pipeline.addLast(<span class="string">"httpServerCodec"</span>, <span class="keyword">new</span> HttpServerCodec());</span><br><span class="line">        pipeline.addLast(<span class="string">"testHttpServerHandler"</span>, <span class="keyword">new</span> TestHttpServerHandler());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="TestHttpServerHandler编写"><a href="#TestHttpServerHandler编写" class="headerlink" title="TestHttpServerHandler编写"></a>TestHttpServerHandler编写</h3><p>在同一个package中创建<strong>TestHttpServerHandler</strong>类,在该类中我们创建“Hello，World”字符串，然后当用户对服务器进行请求时，将Hello，World返回给用户。</p>
+<p><strong>TestHttpServerHandler</strong>需要继承<strong>SimpleChannelInboundHandler</strong> 类，并实现<strong>channelRead0</strong>方法。<strong>channelread0</strong> 读取客户端发送的请求，并向客户端返回响应的代码的函数。</p>
+<p>我们用<strong>ByteBuf</strong>构建Hello，World字符串，<strong>ByteBuf</strong> 是Netty实现的最基本的数据缓冲。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf content = Unpooled.copiedBuffer(<span class="string">"Hello, World"</span>, CharsetUtil.UTF_8);</span><br></pre></td></tr></table></figure>
+
+<p>然后用<strong>DefaultFullHttpResponse</strong>构建响应，该类接受的参数有：协议类型，返回状态，返回内容（即helloworld）。</p>
+<p>然后我们对响应头进行设置，设置内容类型为text/plain，以及设置内容长度为Hello，World的长度。</p>
+<p>最后用<strong>ctx.writeAndFlush</strong>方法把内容返回给客户端。</p>
+<p>具体代码如下所示。<br><img src="https://user-images.githubusercontent.com/20705797/58773206-c37d7300-85ee-11e9-9ffd-e2a4aa641699.png" alt="TestHttpServerHandler"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHttpServerHandler</span> <span class="keyword">extends</span> <span class="title">SimpleChannelInboundHandler</span>&lt;<span class="title">HttpObject</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">channelRead0</span><span class="params">(ChannelHandlerContext ctx, HttpObject msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> HttpRequest) &#123;</span><br><span class="line">            ByteBuf content = Unpooled.copiedBuffer(<span class="string">"Hello, World"</span>, CharsetUtil.UTF_8);</span><br><span class="line">            FullHttpResponse response = <span class="keyword">new</span> DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);</span><br><span class="line">            response.headers().set(HttpHeaderNames.CONTENT_TYPE, <span class="string">"text/plain"</span>);</span><br><span class="line">            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());</span><br><span class="line">            ctx.writeAndFlush(response);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行Netty服务器"><a href="#运行Netty服务器" class="headerlink" title="运行Netty服务器"></a>运行Netty服务器</h3><p>点击Run-&gt; Run “TestServer”运行刚刚编写的程序。<br><img src="https://user-images.githubusercontent.com/20705797/58773205-c37d7300-85ee-11e9-92eb-44c10a06b8fd.png" alt="runserver"></p>
+<p>打开浏览器，输入网址localhost:8888<br>可以看到服务器返回Hello，World</p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773213-c5473680-85ee-11e9-84b4-4cf64997d61c.png" alt="返回helloworld"></p>
+<p>至此，我们第一个netty服务器就编写成功了！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/server/" rel="tag"># server</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/Netty的httpserver执行流程分析/" rel="next" title="Netty的httpserver执行流程分析">
+                <i class="fa fa-chevron-left"></i> Netty的httpserver执行流程分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/02/用netty编写clientServer/" rel="prev" title="如何用Netty进行socket编程">
+                如何用Netty进行socket编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ai1.jpg" alt="importsys">
+            
+              <p class="site-author-name" itemprop="name">importsys</p>
+              <p class="site-description motion-element" itemprop="description">zjuer</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty：简易Http-Webserver编写"><span class="nav-number">1.</span> <span class="nav-text">Netty：简易Http Webserver编写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-介绍"><span class="nav-number">1.1.</span> <span class="nav-text">Netty 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Netty工程"><span class="nav-number">1.2.</span> <span class="nav-text">创建Netty工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入netty-jar包"><span class="nav-number">1.3.</span> <span class="nav-text">导入netty jar包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server编写"><span class="nav-number">1.4.</span> <span class="nav-text">Server编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ServerInitializer编写"><span class="nav-number">1.5.</span> <span class="nav-text">ServerInitializer编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TestHttpServerHandler编写"><span class="nav-number">1.6.</span> <span class="nav-text">TestHttpServerHandler编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行Netty服务器"><span class="nav-number">1.7.</span> <span class="nav-text">运行Netty服务器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">importsys</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+  Visited <span id="busuanzi_value_site_pv"></span> Times
+</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </footer></div>
+    
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"live2d-widget-model-haruto"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</html>
