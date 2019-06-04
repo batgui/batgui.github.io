@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>726. Number of Atoms 原子的数量</title>
+      <title>LeetCode 726. Number of Atoms 原子的数量</title>
       <link href="/2019/06/04/726.%20Number%20of%20Atoms%20%E5%8E%9F%E5%AD%90%E7%9A%84%E6%95%B0%E9%87%8F/"/>
       <url>/2019/06/04/726.%20Number%20of%20Atoms%20%E5%8E%9F%E5%AD%90%E7%9A%84%E6%95%B0%E9%87%8F/</url>
       
@@ -110,31 +110,6 @@
     
     
     <entry>
-      <title>fuzzing工具之AFL的安装与使用</title>
-      <link href="/2019/06/02/afl/"/>
-      <url>/2019/06/02/afl/</url>
-      
-        <content type="html"><![CDATA[<h2 id="fuzzing工具之AFL的安装与使用"><a href="#fuzzing工具之AFL的安装与使用" class="headerlink" title="fuzzing工具之AFL的安装与使用"></a>fuzzing工具之AFL的安装与使用</h2><h3 id="AFL介绍："><a href="#AFL介绍：" class="headerlink" title="AFL介绍："></a>AFL介绍：</h3><p>AFL即American Fuzzy Lop是当今使用最广泛的fuzzer，这个工具在程序执行前对程序源码进行插桩（instrumentation），以便在程序执行过程中实时获取程序的执行情况。AFL用遗传算法对程序的输入进行变异，用边覆盖（edge converage）来测试fuzzing的性能。</p><p>在执行过程中，AFL向被测程序中输入input，然后获取程序的覆盖率，将覆盖率大的input保留下来进行变异，然后在下一轮测试中向被测程序中输出这些变异后的input，一直到程序的覆盖率在较长的一段时间不能继续增大为止。</p><p>通常我们跑AFL的时候需要跑几十个小时，AFL最后会将结果保存在output文件中。</p><h3 id="AFL的安装与使用"><a href="#AFL的安装与使用" class="headerlink" title="AFL的安装与使用"></a>AFL的安装与使用</h3><p>我们首先从github上下载afl</p><p><img src="https://user-images.githubusercontent.com/20705797/58773523-e8beb100-85ef-11e9-9bc2-90120afe6b72.png" alt="git">然后运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><p>来安装AFL</p><p><img src="https://user-images.githubusercontent.com/20705797/58773525-e8beb100-85ef-11e9-804b-7f5bf0a82eb4.png" alt="make"></p><h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>在安装好afl之后，我们就可以来fuzzing程序了，但是在fuzzing程序之前，我们需要对程序进行插桩。运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure CC=&quot;afl-gcc&quot; CXX=&quot;afl-g++&quot;</span><br></pre></td></tr></table></figure><p>就可以完成对程序进行插桩。</p><p>以sam2p为例，我们可以运行下面的命令对程序进行插桩。</p><p><img src="https://user-images.githubusercontent.com/20705797/58773527-e9574780-85ef-11e9-9060-4d692bb1df78.png" alt="sam2p"></p><p>然后我们就可以fuzzing程序了，其中 </p><p><strong>-i</strong> 选项是fuzzer的初始输入。</p><p> <strong>-o</strong> 之后跟的是程序的输出结果。</p><p>@@在运行中会被输入所替换。</p><p><img src="https://user-images.githubusercontent.com/20705797/58773522-e8261a80-85ef-11e9-8966-243642adc8ed.png" alt="fuzz"></p><p>下图所示是fuzzing的面板。</p><p><img src="https://user-images.githubusercontent.com/20705797/58773526-e9574780-85ef-11e9-8482-a8d6f29dac23.png" alt="panel"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> fuzzing </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> AFL </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>fuzzing工具之honggfuzz的安装与使用</title>
       <link href="/2019/06/02/honggfuzz/"/>
       <url>/2019/06/02/honggfuzz/</url>
@@ -177,6 +152,31 @@
         <tags>
             
             <tag> Angora </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>fuzzing工具之AFL的安装与使用</title>
+      <link href="/2019/06/02/afl/"/>
+      <url>/2019/06/02/afl/</url>
+      
+        <content type="html"><![CDATA[<h2 id="fuzzing工具之AFL的安装与使用"><a href="#fuzzing工具之AFL的安装与使用" class="headerlink" title="fuzzing工具之AFL的安装与使用"></a>fuzzing工具之AFL的安装与使用</h2><h3 id="AFL介绍："><a href="#AFL介绍：" class="headerlink" title="AFL介绍："></a>AFL介绍：</h3><p>AFL即American Fuzzy Lop是当今使用最广泛的fuzzer，这个工具在程序执行前对程序源码进行插桩（instrumentation），以便在程序执行过程中实时获取程序的执行情况。AFL用遗传算法对程序的输入进行变异，用边覆盖（edge converage）来测试fuzzing的性能。</p><p>在执行过程中，AFL向被测程序中输入input，然后获取程序的覆盖率，将覆盖率大的input保留下来进行变异，然后在下一轮测试中向被测程序中输出这些变异后的input，一直到程序的覆盖率在较长的一段时间不能继续增大为止。</p><p>通常我们跑AFL的时候需要跑几十个小时，AFL最后会将结果保存在output文件中。</p><h3 id="AFL的安装与使用"><a href="#AFL的安装与使用" class="headerlink" title="AFL的安装与使用"></a>AFL的安装与使用</h3><p>我们首先从github上下载afl</p><p><img src="https://user-images.githubusercontent.com/20705797/58773523-e8beb100-85ef-11e9-9bc2-90120afe6b72.png" alt="git">然后运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><p>来安装AFL</p><p><img src="https://user-images.githubusercontent.com/20705797/58773525-e8beb100-85ef-11e9-804b-7f5bf0a82eb4.png" alt="make"></p><h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>在安装好afl之后，我们就可以来fuzzing程序了，但是在fuzzing程序之前，我们需要对程序进行插桩。运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure CC=&quot;afl-gcc&quot; CXX=&quot;afl-g++&quot;</span><br></pre></td></tr></table></figure><p>就可以完成对程序进行插桩。</p><p>以sam2p为例，我们可以运行下面的命令对程序进行插桩。</p><p><img src="https://user-images.githubusercontent.com/20705797/58773527-e9574780-85ef-11e9-9060-4d692bb1df78.png" alt="sam2p"></p><p>然后我们就可以fuzzing程序了，其中 </p><p><strong>-i</strong> 选项是fuzzer的初始输入。</p><p> <strong>-o</strong> 之后跟的是程序的输出结果。</p><p>@@在运行中会被输入所替换。</p><p><img src="https://user-images.githubusercontent.com/20705797/58773522-e8261a80-85ef-11e9-8966-243642adc8ed.png" alt="fuzz"></p><p>下图所示是fuzzing的面板。</p><p><img src="https://user-images.githubusercontent.com/20705797/58773526-e9574780-85ef-11e9-8482-a8d6f29dac23.png" alt="panel"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> fuzzing </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AFL </tag>
             
         </tags>
       
