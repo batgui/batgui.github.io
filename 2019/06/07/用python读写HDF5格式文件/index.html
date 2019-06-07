@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/ai1.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/ai1.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/ai1.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/ai1.jpg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HDF5,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="用python读写HDF5格式文件HDF5介绍&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;HDF(Hierarchical Data File)是美国国家高级计算应用中心(National Center for Supercomputing Application,NCSA)为了满足各种领域研究需求而研制的一种能高效存储和分发科学数据的新型数据格式 。&amp;nbsp; &amp;nbsp; &amp;nbs">
+<meta name="keywords" content="HDF5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用python读写HDF5格式文件">
+<meta property="og:url" content="https://batgui.github.io/2019/06/07/用python读写HDF5格式文件/index.html">
+<meta property="og:site_name" content="Importsys Blog">
+<meta property="og:description" content="用python读写HDF5格式文件HDF5介绍&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;HDF(Hierarchical Data File)是美国国家高级计算应用中心(National Center for Supercomputing Application,NCSA)为了满足各种领域研究需求而研制的一种能高效存储和分发科学数据的新型数据格式 。&amp;nbsp; &amp;nbsp; &amp;nbs">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-07T04:57:59.945Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用python读写HDF5格式文件">
+<meta name="twitter:description" content="用python读写HDF5格式文件HDF5介绍&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;HDF(Hierarchical Data File)是美国国家高级计算应用中心(National Center for Supercomputing Application,NCSA)为了满足各种领域研究需求而研制的一种能高效存储和分发科学数据的新型数据格式 。&amp;nbsp; &amp;nbsp; &amp;nbs">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://batgui.github.io/2019/06/07/用python读写HDF5格式文件/">
+
+
+
+
+
+  <title>用python读写HDF5格式文件 | Importsys Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Importsys Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I love yueyue</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://batgui.github.io/2019/06/07/用python读写HDF5格式文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="importsys">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/ai1.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Importsys Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用python读写HDF5格式文件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-07T12:57:45+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="用python读写HDF5格式文件"><a href="#用python读写HDF5格式文件" class="headerlink" title="用python读写HDF5格式文件"></a>用python读写HDF5格式文件</h1><h2 id="HDF5介绍"><a href="#HDF5介绍" class="headerlink" title="HDF5介绍"></a>HDF5介绍</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;HDF(Hierarchical Data File)是美国国家高级计算应用中心(National Center for Supercomputing Application,NCSA)为了满足各种领域研究需求而研制的一种能高效存储和分发科学数据的新型数据格式 。<br>&nbsp; &nbsp; &nbsp; &nbsp;HDF5适合存储大量的二进制信息，并且提供并行IO加快读写速度。<br>&nbsp; &nbsp; &nbsp; &nbsp;我们可以用python的h5py包来读写HDF5文件。</p>
+<h2 id="创建HDF5文件"><a href="#创建HDF5文件" class="headerlink" title="创建HDF5文件"></a>创建HDF5文件</h2><ol>
+<li>用<strong>h5py.File()</strong>函数和<strong>‘w’</strong> 选项创建一个data.h5文件</li>
+<li>如<strong>create_dataset()</strong> 函数在hdf5文件里面写入dataset，该文件里面有两个dataset分别是dataset_1和dataset_2。<br>具体代码如下。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line">data1 = np.random.random(size = (<span class="number">100</span>,<span class="number">100</span>))</span><br><span class="line">data2 = np.random.random(size = (<span class="number">200</span>,<span class="number">200</span>))</span><br><span class="line">hdfFile = h5py.File(<span class="string">'data.h5'</span>, <span class="string">'w'</span>)</span><br><span class="line">hdfFile.create_dataset(<span class="string">'dataset_1'</span>, data=data1)</span><br><span class="line">hdfFile.create_dataset(<span class="string">'dataset_2'</span>, data=data2)</span><br><span class="line">hdfFile.close()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="读取HDF5文件"><a href="#读取HDF5文件" class="headerlink" title="读取HDF5文件"></a>读取HDF5文件</h2><ol>
+<li>用<strong>h5py.File()</strong>函数和<strong>‘r’</strong> 选项读取一个data.h5文件</li>
+<li>用<strong>get()</strong> 方法得到某个dataset<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hdfFile = h5py.File(<span class="string">'data.h5'</span>, <span class="string">'r'</span>)</span><br><span class="line">dataset1 = hdfFile.get(<span class="string">'dataset_1'</span>)</span><br><span class="line">print(dataset1.shape)</span><br><span class="line">hdfFile.close()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="HDF5的group"><a href="#HDF5的group" class="headerlink" title="HDF5的group"></a>HDF5的group</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;group在HDF5中的作用类似于linux的文件系统层次结构，通过这个层次结构可以合理的将不同的数据组织起来。</p>
+<ol>
+<li>我们用<strong>create_group()</strong> 函数创建一个组。</li>
+<li>用<strong>keys()</strong> 函数来得到HDF5文件里面的group</li>
+<li>用<strong>items()</strong> 函数可以查看某个group里面的dataset。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hdfFile = h5py.File(<span class="string">'data.h5'</span>, <span class="string">'w'</span>)</span><br><span class="line">group1 = hdfFile.create_group(<span class="string">'group1'</span>)</span><br><span class="line">group1.create_dataset(<span class="string">'dataset_1'</span>, data=data1)</span><br><span class="line">group1.create_dataset(<span class="string">'dataset_2'</span>, data=data2)</span><br><span class="line">print(hdfFile.keys())</span><br><span class="line"></span><br><span class="line">print(group1.items())</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HDF5/" rel="tag"># HDF5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/用Python来实现Base64编码和解码/" rel="next" title="用Python来实现Base64编码和解码">
+                <i class="fa fa-chevron-left"></i> 用Python来实现Base64编码和解码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/ai1.jpg" alt="importsys">
+            
+              <p class="site-author-name" itemprop="name">importsys</p>
+              <p class="site-description motion-element" itemprop="description">zjuer</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用python读写HDF5格式文件"><span class="nav-number">1.</span> <span class="nav-text">用python读写HDF5格式文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HDF5介绍"><span class="nav-number">1.1.</span> <span class="nav-text">HDF5介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建HDF5文件"><span class="nav-number">1.2.</span> <span class="nav-text">创建HDF5文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取HDF5文件"><span class="nav-number">1.3.</span> <span class="nav-text">读取HDF5文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HDF5的group"><span class="nav-number">1.4.</span> <span class="nav-text">HDF5的group</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">importsys</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+  Visited <span id="busuanzi_value_site_pv"></span> Times
+</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </footer></div>
+    
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
