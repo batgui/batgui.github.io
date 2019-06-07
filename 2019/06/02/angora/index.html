@@ -365,24 +365,16 @@
       
         <h2 id="fuzzing工具之Angora的安装与使用"><a href="#fuzzing工具之Angora的安装与使用" class="headerlink" title="fuzzing工具之Angora的安装与使用"></a>fuzzing工具之Angora的安装与使用</h2><h3 id="Angora介绍："><a href="#Angora介绍：" class="headerlink" title="Angora介绍："></a>Angora介绍：</h3><p>Angora 是安全四大会中Okland会议中发表的fuzzer，Angora是基于突变的、覆盖率指导的fuzzer。目前fuzzer中一大难题是如何解决fuzzing过程中的路径约束，以提高 branch coverage。Angora在没有利用符号执行的前提下解决了这个问题。</p>
 <p>在Angora paper中Angora表现优异，大幅超过AFL。</p>
-<h3 id="Angora的安装与使用"><a href="#Angora的安装与使用" class="headerlink" title="Angora的安装与使用"></a>Angora的安装与使用</h3><p>第一步从github上下载Angora</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/AngoraFuzzer/Angora</span><br></pre></td></tr></table></figure>
-
+<h3 id="Angora的安装与使用"><a href="#Angora的安装与使用" class="headerlink" title="Angora的安装与使用"></a>Angora的安装与使用</h3><p>第一步从github上下载Angora<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/AngoraFuzzer/Angora</span><br></pre></td></tr></table></figure></p>
 <p>Angora需要LLVM4.0的支持，所以我们要下载LLVM4.0，命令如下。<br><img src="https://user-images.githubusercontent.com/20705797/58773571-1efc3080-85f0-11e9-9103-ce38c815f9d7.png" alt="llvm"><br>然后我们把下面两个环境变量添加到(<code>~/.bashrc</code>, <code>~/.zshrc</code>)中去。<br><img src="https://user-images.githubusercontent.com/20705797/58773570-1e639a00-85f0-11e9-9a6d-c2bc4617246c.png" alt="line"></p>
 <h3 id="fuzzer编译"><a href="#fuzzer编译" class="headerlink" title="fuzzer编译"></a>fuzzer编译</h3><p>运行如下命令编译fuzzer。<br><img src="https://user-images.githubusercontent.com/20705797/58773573-1efc3080-85f0-11e9-9170-399d9b3c5573.png" alt="script"></p>
 <h3 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h3><p>和AFL一样，系统的core dumps必须被disable。</p>
 <p><img src="https://user-images.githubusercontent.com/20705797/58773564-1c99d680-85f0-11e9-908c-5def76ee0dc0.png" alt="core"></p>
-<h3 id="编译目标程序"><a href="#编译目标程序" class="headerlink" title="编译目标程序"></a>编译目标程序</h3><p>用如下命令编译有 taint tracking支持的程序。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USE_TRACK=1 make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://user-images.githubusercontent.com/20705797/58773574-1f94c700-85f0-11e9-9293-49b2c991fb1f.png" alt="taint"><br>把编译后的结果放在tain目录下，并加上.taint后缀。<br><img src="https://user-images.githubusercontent.com/20705797/58773566-1d326d00-85f0-11e9-8eaf-ac785d18a7a4.png" alt="cptaint"><br>然后用如下命令编译有light instrumentation支持的程序。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">USE_FAST=1 make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
+<h3 id="编译目标程序"><a href="#编译目标程序" class="headerlink" title="编译目标程序"></a>编译目标程序</h3><p>用如下命令编译有 taint tracking支持的程序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USE_TRACK=1 make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-images.githubusercontent.com/20705797/58773574-1f94c700-85f0-11e9-9293-49b2c991fb1f.png" alt="taint"><br>把编译后的结果放在tain目录下，并加上.taint后缀。<br><img src="https://user-images.githubusercontent.com/20705797/58773566-1d326d00-85f0-11e9-8eaf-ac785d18a7a4.png" alt="cptaint"><br>然后用如下命令编译有light instrumentation支持的程序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br><span class="line">USE_FAST=1 make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
 <p><img src="https://user-images.githubusercontent.com/20705797/58773567-1d326d00-85f0-11e9-855f-cbe310ec3a80.png" alt="fast"><br>把编译后的结果放在fast目录下，并加上.fast后缀。</p>
 <p><img src="https://user-images.githubusercontent.com/20705797/58773565-1c99d680-85f0-11e9-9856-f07f9337a77a.png" alt="cpfast"></p>
-<h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>用如下命令对程序进行fuzz。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./angora_fuzzer -i input -o output -t path/to/taint/program -- path/to/fast/program [argv]</span><br></pre></td></tr></table></figure>
-
+<h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>用如下命令对程序进行fuzz。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./angora_fuzzer -i input -o output -t path/to/taint/program -- path/to/fast/program [argv]</span><br></pre></td></tr></table></figure></p>
 <p><img src="https://user-images.githubusercontent.com/20705797/58773568-1dcb0380-85f0-11e9-8eac-c039e0e1450e.png" alt="fuzz"><br>fuzzing面板如下图所示。<br><img src="https://user-images.githubusercontent.com/20705797/58773569-1dcb0380-85f0-11e9-8ced-5e6520d438f2.png" alt="fuzz5"></p>
 
       
@@ -424,8 +416,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/02/honggfuzz/" rel="prev" title="fuzzing工具之honggfuzz的安装与使用">
-                fuzzing工具之honggfuzz的安装与使用 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/02/afl/" rel="prev" title="fuzzing工具之AFL的安装与使用">
+                fuzzing工具之AFL的安装与使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -771,5 +763,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

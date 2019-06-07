@@ -356,13 +356,11 @@
 <h2 id="创建HDF5文件"><a href="#创建HDF5文件" class="headerlink" title="创建HDF5文件"></a>创建HDF5文件</h2><ol>
 <li>用<strong>h5py.File()</strong>函数和<strong>‘w’</strong> 选项创建一个data.h5文件</li>
 <li>如<strong>create_dataset()</strong> 函数在hdf5文件里面写入dataset，该文件里面有两个dataset分别是dataset_1和dataset_2。<br>具体代码如下。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> h5py</span><br><span class="line">data1 = np.random.random(size = (<span class="number">100</span>,<span class="number">100</span>))</span><br><span class="line">data2 = np.random.random(size = (<span class="number">200</span>,<span class="number">200</span>))</span><br><span class="line">hdfFile = h5py.File(<span class="string">'data.h5'</span>, <span class="string">'w'</span>)</span><br><span class="line">hdfFile.create_dataset(<span class="string">'dataset_1'</span>, data=data1)</span><br><span class="line">hdfFile.create_dataset(<span class="string">'dataset_2'</span>, data=data2)</span><br><span class="line">hdfFile.close()</span><br></pre></td></tr></table></figure>
-
 </li>
 </ol>
 <h2 id="读取HDF5文件"><a href="#读取HDF5文件" class="headerlink" title="读取HDF5文件"></a>读取HDF5文件</h2><ol>
 <li>用<strong>h5py.File()</strong>函数和<strong>‘r’</strong> 选项读取一个data.h5文件</li>
 <li>用<strong>get()</strong> 方法得到某个dataset<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hdfFile = h5py.File(<span class="string">'data.h5'</span>, <span class="string">'r'</span>)</span><br><span class="line">dataset1 = hdfFile.get(<span class="string">'dataset_1'</span>)</span><br><span class="line">print(dataset1.shape)</span><br><span class="line">hdfFile.close()</span><br></pre></td></tr></table></figure>
-
 </li>
 </ol>
 <h2 id="HDF5的group"><a href="#HDF5的group" class="headerlink" title="HDF5的group"></a>HDF5的group</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;group在HDF5中的作用类似于linux的文件系统层次结构，通过这个层次结构可以合理的将不同的数据组织起来。</p>
@@ -754,5 +752,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

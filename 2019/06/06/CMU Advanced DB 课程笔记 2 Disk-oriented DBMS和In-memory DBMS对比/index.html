@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="@[TOC](CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型) CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型数据库工作负载：数据库工作负载有主要分为两种：&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作">
+<meta name="description" content="@TOC CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型数据库工作负载：数据库工作负载有主要分为两种：&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作只会涉及到很小的一部分数据。 &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;">
 <meta name="keywords" content="CMU Advanced DB course">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型">
 <meta property="og:url" content="https://batgui.github.io/2019/06/06/CMU Advanced DB 课程笔记 2 Disk-oriented DBMS和In-memory DBMS对比/index.html">
 <meta property="og:site_name" content="Importsys Blog">
-<meta property="og:description" content="@[TOC](CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型) CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型数据库工作负载：数据库工作负载有主要分为两种：&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作">
+<meta property="og:description" content="@TOC CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型数据库工作负载：数据库工作负载有主要分为两种：&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作只会涉及到很小的一部分数据。 &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://user-images.githubusercontent.com/20705797/59030421-84238080-8893-11e9-9851-d54acd972f1d.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/20705797/59030422-84238080-8893-11e9-92ce-76db5de1ae6e.png">
@@ -100,7 +100,7 @@
 <meta property="og:updated_time" content="2019-06-07T04:58:02.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型">
-<meta name="twitter:description" content="@[TOC](CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型) CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型数据库工作负载：数据库工作负载有主要分为两种：&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作">
+<meta name="twitter:description" content="@TOC CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型数据库工作负载：数据库工作负载有主要分为两种：&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作只会涉及到很小的一部分数据。 &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/20705797/59030421-84238080-8893-11e9-9851-d54acd972f1d.png">
 
 
@@ -374,16 +374,14 @@
       
 
       
-        <p>@[TOC](CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型)</p>
+        <p>@<a href="CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型">TOC</a></p>
 <h1 id="CMU-Advanced-DB-课程笔记-2：数据库工作负载和数据库事务模型"><a href="#CMU-Advanced-DB-课程笔记-2：数据库工作负载和数据库事务模型" class="headerlink" title="CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型"></a>CMU Advanced DB 课程笔记#2：数据库工作负载和数据库事务模型</h1><h2 id="数据库工作负载："><a href="#数据库工作负载：" class="headerlink" title="数据库工作负载："></a>数据库工作负载：</h2><p>数据库工作负载有主要分为两种：<br>&nbsp; &nbsp; &nbsp; &nbsp;在线事务处理（OLTP）:每次只读取或更新数据库的一小部分，比如说用户去淘宝购物，用户只能对自己的购物车或者地址进行操作，这些操作只会涉及到很小的一部分数据。</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;在线分析处理（OLAP）:和OLTP不同的是，OLAP会对数据库的大量数据进行操作，例如进行连接或聚合运算，比如说淘宝会对大量的用户数据进行分析，来帮助淘宝进行商业决策，更好的为用户服务。</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;近几年出现了混合事务+分析处理（HATP）的数据库，在HATP数据库中既可以进行OLTP操作，又可以进行OLAP操作，避免了资源的浪费。</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;如下图所示是常见的企业配置数据库的方式，公司用前端的OLTP数据库来进行事务处理，一个公司可以有好几个OLTP数据库。当公司想要对这几个OLTP数据库内的数据进行分析的时候，公司需要把数据从OLTP数据库拿出来，进行提取转换加载（ETL）操作，该操作会对数据进行清洗以及转换，把数据格式统一起来加载到后端的OLAP数据库中。然后在OLAP数据库中进行分析操作，必要的时候OLAP数据库还会给OLTP数据库返回计算的结果。<br><img src="https://user-images.githubusercontent.com/20705797/59030421-84238080-8893-11e9-9851-d54acd972f1d.png" alt="bifurcated env"><br>&nbsp; &nbsp; &nbsp; &nbsp;以淘宝为例，淘宝在前端用OLTP收集用户的物品点击信息，在后端OLAP数据库中计算用户可能感兴趣的物品，将这个物品返回给前端OLTP数据库，以便用户下次访问的时候将这个物品呈现给用户。</p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp;HTAP数据库允许了某些只能运行在后端OLAP数据库的操作运行在前端OLTP数据库中，减少了数据从</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OLTP DB --&gt; ETL --&gt; OLAP DB --&gt; OLTP DB</span><br></pre></td></tr></table></figure>
-
+<p>&nbsp; &nbsp; &nbsp; &nbsp;HTAP数据库允许了某些只能运行在后端OLAP数据库的操作运行在前端OLTP数据库中，减少了数据从<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OLTP DB --&gt; ETL --&gt; OLAP DB --&gt; OLTP DB</span><br></pre></td></tr></table></figure></p>
 <p> 之间传输的时间，但是HTAP不能取代ETL。</p>
-<h2 id="数据库事务（Transaction简称为Txn）-Model："><a href="#数据库事务（Transaction简称为Txn）-Model：" class="headerlink" title="数据库事务（Transaction简称为Txn） Model："></a>数据库事务（Transaction简称为Txn） Model：</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;Transaction是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。—维基百科<br>&nbsp; &nbsp; &nbsp; &nbsp;数据库事务模型主要有六种，分别是：Flat Txns，Flat Txns+ Savepoints，Nested Txns，Chained Txns，Compensating Txns，Saga Txns，以下对这些模型进行具体介绍。</p>
+<h2 id="数据库事务（Transaction简称为Txn）-Model："><a href="#数据库事务（Transaction简称为Txn）-Model：" class="headerlink" title="数据库事务（Transaction简称为Txn） Model："></a>数据库事务（Transaction简称为Txn） Model：</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;Transaction是数据库管理系统执行过程中的一个逻辑单位，由一个有限的数据库操作序列构成。—-维基百科<br>&nbsp; &nbsp; &nbsp; &nbsp;数据库事务模型主要有六种，分别是：Flat Txns，Flat Txns+ Savepoints，Nested Txns，Chained Txns，Compensating Txns，Saga Txns，以下对这些模型进行具体介绍。</p>
 <h3 id="Flat-Txns"><a href="#Flat-Txns" class="headerlink" title="Flat Txns:"></a>Flat Txns:</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;我们现在所说的transaction大多指的是Flat Txns。Flat Txns以<strong>BEGIN</strong>开头，后面跟着一系列操作，最后以<strong>COMMIT</strong>或者<strong>ROLLBACK</strong>结束。</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;如下图所示，<strong>Txn #1</strong>以<strong>BEGIN</strong>开头，紧接着对<strong>A</strong>进行读取，对<strong>B</strong>进行写操作，最后<strong>COMMIT</strong>，表明<strong>B</strong>被永久写入数据库中了， <strong>Txn #2</strong>在对<strong>B</strong>进行写操作之后<strong>ROLLBACK</strong>，表明对<strong>B</strong>的写操作会回滚，<strong>B</strong>不会被写入数据库中。</p>
 <p><img src="https://user-images.githubusercontent.com/20705797/59030422-84238080-8893-11e9-92ce-76db5de1ae6e.png" alt="FLat "></p>
@@ -403,7 +401,7 @@
 <p><img src="https://user-images.githubusercontent.com/20705797/59030419-84238080-8893-11e9-9c14-552afec771e1.png" alt="txn chain"></p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;若想逆转已经<strong>COMMIT</strong>的transaction的结果，我们需要Compensating Txn。</p>
 <h3 id="Compensating-Txns："><a href="#Compensating-Txns：" class="headerlink" title="Compensating Txns："></a>Compensating Txns：</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;Compensating Txns具有以逆转已经<strong>COMMIT</strong>的transaction的功能。把Chained Txns和Compensating Txns加在一起，就是Saga Txns。</p>
-<h3 id="Saga-Txns："><a href="#Saga-Txns：" class="headerlink" title="Saga Txns："></a>Saga Txns：</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;Saga Txns由一系列Chained Txns $T_1-T_n$和Compensating Txns $C_1-C_{n−1}$组成。这些transaction将会以 $T_1,. . . T_j,C_j. . .C_1$(其中j &lt; n$)的顺序进行<strong>COMMIT</strong>。Saga Txns允许数据库支持长时间运行的，多步的transaction。</p>
+<h3 id="Saga-Txns："><a href="#Saga-Txns：" class="headerlink" title="Saga Txns："></a>Saga Txns：</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;Saga Txns由一系列Chained Txns $T<em>1-T_n$和Compensating Txns $C_1-C</em>{n−1}$组成。这些transaction将会以 $T_1,. . . T_j,C_j. . .C_1$(其中j &lt; n$)的顺序进行<strong>COMMIT</strong>。Saga Txns允许数据库支持长时间运行的，多步的transaction。</p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;如下图所示，假设<strong>Txn #1</strong>，<strong>Txn #2</strong>，<strong>Txn #3</strong>是Chained Txns，在运行<strong>Txn #3</strong>的时候程序中断，若此时什么都不处理则<strong>Txn #1</strong>和 <strong>Txn #2</strong>的的产物<strong>A + 1</strong>和<strong>B + 1</strong>仍然会被写入数据库中。</p>
 <p><img src="https://user-images.githubusercontent.com/20705797/59030414-82f25380-8893-11e9-8f99-13bd97a88bd3.png" alt="saga txns1"></p>
 <p>&nbsp; &nbsp; &nbsp; &nbsp;Saga Txns会继续运行Compensating Txns，从后往前逆转已经<strong>COMMIT</strong>的transactions的操作。</p>
@@ -796,5 +794,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

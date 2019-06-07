@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Maven教程Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。 ###Maven 安装 ####安装JAVA并设置JAVA_HOME变量在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。在linux环境下，输入 1echo $JAVA_HOME  若返回值为path_to_jdk，则说明JAVA设置正确。 ####解压">
+<meta name="description" content="Maven教程Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。 Maven 安装安装JAVA并设置JAVA_HOME变量在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。在linux环境下，输入 1echo $JAVA_HOME 若返回值为path_to_jdk，则说明JAVA设置正确。 解压Maven核心程序包，并将">
 <meta name="keywords" content="Maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Maven教程">
 <meta property="og:url" content="https://batgui.github.io/2019/06/02/maven安装/index.html">
 <meta property="og:site_name" content="Importsys Blog">
-<meta property="og:description" content="Maven教程Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。 ###Maven 安装 ####安装JAVA并设置JAVA_HOME变量在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。在linux环境下，输入 1echo $JAVA_HOME  若返回值为path_to_jdk，则说明JAVA设置正确。 ####解压">
+<meta property="og:description" content="Maven教程Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。 Maven 安装安装JAVA并设置JAVA_HOME变量在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。在linux环境下，输入 1echo $JAVA_HOME 若返回值为path_to_jdk，则说明JAVA设置正确。 解压Maven核心程序包，并将">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-06-03T02:31:41.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maven教程">
-<meta name="twitter:description" content="Maven教程Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。 ###Maven 安装 ####安装JAVA并设置JAVA_HOME变量在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。在linux环境下，输入 1echo $JAVA_HOME  若返回值为path_to_jdk，则说明JAVA设置正确。 ####解压">
+<meta name="twitter:description" content="Maven教程Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。 Maven 安装安装JAVA并设置JAVA_HOME变量在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。在linux环境下，输入 1echo $JAVA_HOME 若返回值为path_to_jdk，则说明JAVA设置正确。 解压Maven核心程序包，并将">
 
 
 
@@ -353,31 +353,18 @@
 
       
         <h2 id="Maven教程"><a href="#Maven教程" class="headerlink" title="Maven教程"></a>Maven教程</h2><p>Maven是一款基于JAVA平台的自动化构建工具。本节介绍Maven的安装和基础知识。</p>
-<p>###Maven 安装</p>
-<p>####安装JAVA并设置JAVA_HOME变量<br>在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。<br>在linux环境下，输入</p>
+<h3 id="Maven-安装"><a href="#Maven-安装" class="headerlink" title="Maven 安装"></a>Maven 安装</h3><h4 id="安装JAVA并设置JAVA-HOME变量"><a href="#安装JAVA并设置JAVA-HOME变量" class="headerlink" title="安装JAVA并设置JAVA_HOME变量"></a>安装JAVA并设置JAVA_HOME变量</h4><p>在安装Maven之前首先要确保JAVA已经安装到系统中，并正确设置了JAVA_HOME变量。<br>在linux环境下，输入</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $JAVA_HOME</span><br></pre></td></tr></table></figure>
-
 <p>若返回值为path_to_jdk，则说明JAVA设置正确。</p>
-<p>####解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf apache-maven-3.6.1-bin.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p>然后在命令行中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure>
-
+<h4 id="解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。"><a href="#解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。" class="headerlink" title="解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。"></a>解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf apache-maven-3.6.1-bin.tar.gz</span><br></pre></td></tr></table></figure>
+<p>然后在命令行中输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure></p>
 <p>如果输出结果不为空，则表明Maven安装成功。</p>
-<p>####创建一个Maven工程<br>运行如下代码创建一个Maven工程，其中groupdId是公司或者组织域名+项目名，artifactId是模块名。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.first.app -DartifactId=first-maven-app</span><br></pre></td></tr></table></figure>
-
+<h4 id="创建一个Maven工程"><a href="#创建一个Maven工程" class="headerlink" title="创建一个Maven工程"></a>创建一个Maven工程</h4><p>运行如下代码创建一个Maven工程，其中groupdId是公司或者组织域名+项目名，artifactId是模块名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -B archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.first.app -DartifactId=first-maven-app</span><br></pre></td></tr></table></figure></p>
 <p>在创建成功之后，我们打开这个工程，可以看到一个名为pom.xml的文件，<br>POM.xml是项目对象模型，是Maven的核心配置文件，与构建过程中的一切设置都在这个文件中配置。该文件的内容如下图所示。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</span><br><span class="line">  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">  &lt;groupId&gt;com.first.app&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;first-maven-app&lt;/artifactId&gt;</span><br><span class="line">  &lt;packaging&gt;jar&lt;/packaging&gt;</span><br><span class="line">  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">  &lt;name&gt;first-maven-app&lt;/name&gt;</span><br><span class="line">  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</span><br><span class="line">  &lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.8.1&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
-
 <p>其中packaging是打包格式，version是工程版本，name是工程的名字。 </p>
-<p>####输入测试代码<br>在<strong>src/main/java/com/first/app/App.java</strong>中输入如下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.first.app;</span><br><span class="line"></span><br><span class="line">public class HelloWorld &#123;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  HelloWorld myWorld = new HelloWorld();</span><br><span class="line">  String said = myWorld.sayHelloTo(&quot;World&quot;);</span><br><span class="line">  System.out.println(said);</span><br><span class="line"> &#125;</span><br><span class="line"> public String sayHelloTo(String to) &#123;</span><br><span class="line">  return &quot;Hello &quot;+to+&quot;!&quot;;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后我们就可以用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn compile</span><br></pre></td></tr></table></figure>
-
+<h4 id="输入测试代码"><a href="#输入测试代码" class="headerlink" title="输入测试代码"></a>输入测试代码</h4><p>在<strong>src/main/java/com/first/app/App.java</strong>中输入如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.first.app;</span><br><span class="line"></span><br><span class="line">public class HelloWorld &#123;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  HelloWorld myWorld = new HelloWorld();</span><br><span class="line">  String said = myWorld.sayHelloTo(&quot;World&quot;);</span><br><span class="line">  System.out.println(said);</span><br><span class="line"> &#125;</span><br><span class="line"> public String sayHelloTo(String to) &#123;</span><br><span class="line">  return &quot;Hello &quot;+to+&quot;!&quot;;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们就可以用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn compile</span><br></pre></td></tr></table></figure></p>
 <p>命令编译主程序了。</p>
 
       
@@ -555,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven教程"><span class="nav-number">1.</span> <span class="nav-text">Maven教程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven教程"><span class="nav-number">1.</span> <span class="nav-text">Maven教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maven-安装"><span class="nav-number">1.1.</span> <span class="nav-text">Maven 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装JAVA并设置JAVA-HOME变量"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装JAVA并设置JAVA_HOME变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。"><span class="nav-number">1.1.2.</span> <span class="nav-text">解压Maven核心程序包，并将解压路径添加到PATH环境变量中去。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个Maven工程"><span class="nav-number">1.1.3.</span> <span class="nav-text">创建一个Maven工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入测试代码"><span class="nav-number">1.1.4.</span> <span class="nav-text">输入测试代码</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -766,5 +753,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

@@ -362,14 +362,10 @@
 <p>在执行过程中，AFL向被测程序中输入input，然后获取程序的覆盖率，将覆盖率大的input保留下来进行变异，然后在下一轮测试中向被测程序中输出这些变异后的input，一直到程序的覆盖率在较长的一段时间不能继续增大为止。</p>
 <p>通常我们跑AFL的时候需要跑几十个小时，AFL最后会将结果保存在output文件中。</p>
 <h3 id="AFL的安装与使用"><a href="#AFL的安装与使用" class="headerlink" title="AFL的安装与使用"></a>AFL的安装与使用</h3><p>我们首先从github上下载afl</p>
-<p><img src="https://user-images.githubusercontent.com/20705797/58773523-e8beb100-85ef-11e9-9bc2-90120afe6b72.png" alt="git">然后运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
+<p><img src="https://user-images.githubusercontent.com/20705797/58773523-e8beb100-85ef-11e9-9bc2-90120afe6b72.png" alt="git">然后运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
 <p>来安装AFL</p>
 <p><img src="https://user-images.githubusercontent.com/20705797/58773525-e8beb100-85ef-11e9-804b-7f5bf0a82eb4.png" alt="make"></p>
-<h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>在安装好afl之后，我们就可以来fuzzing程序了，但是在fuzzing程序之前，我们需要对程序进行插桩。运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure CC=&quot;afl-gcc&quot; CXX=&quot;afl-g++&quot;</span><br></pre></td></tr></table></figure>
-
+<h3 id="进行fuzzing"><a href="#进行fuzzing" class="headerlink" title="进行fuzzing"></a>进行fuzzing</h3><p>在安装好afl之后，我们就可以来fuzzing程序了，但是在fuzzing程序之前，我们需要对程序进行插桩。运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure CC=&quot;afl-gcc&quot; CXX=&quot;afl-g++&quot;</span><br></pre></td></tr></table></figure></p>
 <p>就可以完成对程序进行插桩。</p>
 <p>以sam2p为例，我们可以运行下面的命令对程序进行插桩。</p>
 <p><img src="https://user-images.githubusercontent.com/20705797/58773527-e9574780-85ef-11e9-9060-4d692bb1df78.png" alt="sam2p"></p>
@@ -410,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/02/honggfuzz/" rel="next" title="fuzzing工具之honggfuzz的安装与使用">
-                <i class="fa fa-chevron-left"></i> fuzzing工具之honggfuzz的安装与使用
+              <a href="/2019/06/02/angora/" rel="next" title="fuzzing工具之Angora的安装与使用">
+                <i class="fa fa-chevron-left"></i> fuzzing工具之Angora的安装与使用
               </a>
             
           </div>
@@ -420,8 +416,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/03/82. Remove Duplicates from Sorted List II/" rel="prev" title="Leetcode 82. Remove Duplicates from Sorted List II 删除排序链表中的重复元素 II">
-                Leetcode 82. Remove Duplicates from Sorted List II 删除排序链表中的重复元素 II <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/02/honggfuzz/" rel="prev" title="fuzzing工具之honggfuzz的安装与使用">
+                fuzzing工具之honggfuzz的安装与使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -767,5 +763,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

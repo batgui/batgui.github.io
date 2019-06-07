@@ -363,54 +363,62 @@
 <p>所以t = minutesToTest/minutesToDie 就是一共可以测试的次数</p>
 <p>我们可以反向理解，给定n个小猪，给定t次测试次数，求最多可以有几个水桶。</p>
 <p>当有2个小猪，1个测试次数时<br>可以有4个水桶，分析如下</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>水桶</th>
-<th align="center">1</th>
-<th align="right">2</th>
-<th align="right">3</th>
-<th align="right">4</th>
+<th style="text-align:center">1</th>
+<th style="text-align:right">2</th>
+<th style="text-align:right">3</th>
+<th style="text-align:right">4</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>喝水情况</td>
-<td align="center">00</td>
-<td align="right">01</td>
-<td align="right">10</td>
-<td align="right">11</td>
+<td style="text-align:center">00</td>
+<td style="text-align:right">01</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">11</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>其中00代表小猪1,2都不喝水桶1的水；01代表小猪1不喝水桶1的水，小猪2在第一轮喝水桶1的水。</p>
 <p>当有2个小猪，2个测试次数时（即两轮）,可以有9个水桶：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>水桶</th>
-<th align="center">1</th>
-<th align="right">2</th>
-<th align="right">3</th>
-<th align="right">4</th>
-<th align="center">5</th>
-<th align="right">6</th>
-<th align="right">7</th>
-<th align="right">8</th>
-<th align="right">9</th>
+<th style="text-align:center">1</th>
+<th style="text-align:right">2</th>
+<th style="text-align:right">3</th>
+<th style="text-align:right">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:right">6</th>
+<th style="text-align:right">7</th>
+<th style="text-align:right">8</th>
+<th style="text-align:right">9</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>喝水情况</td>
-<td align="center">00</td>
-<td align="right">01</td>
-<td align="right">02</td>
-<td align="right">10</td>
-<td align="center">11</td>
-<td align="right">12</td>
-<td align="right">20</td>
-<td align="right">21</td>
-<td align="right">22</td>
+<td style="text-align:center">00</td>
+<td style="text-align:right">01</td>
+<td style="text-align:right">02</td>
+<td style="text-align:right">10</td>
+<td style="text-align:center">11</td>
+<td style="text-align:right">12</td>
+<td style="text-align:right">20</td>
+<td style="text-align:right">21</td>
+<td style="text-align:right">22</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>其中00代表小猪1,2都不喝水桶1的水；01代表小猪1不喝水桶1的水，小猪2在第一轮喝水桶1的水；21表示小猪1在第二轮喝水桶8的水，小猪2在第一轮喝水桶8的水。</p>
 <p>假设5号水桶有毒，则小猪1,2在第一轮全部死亡，只有5号水桶可以做到这一点。<br>假设6号水桶有毒，则小猪1在第一轮结束后死亡，可以确定水桶4,5,6有问题，又根据小猪2在第一轮结束后存活，可以确定水桶6有问题。<br>所以根据小猪喝水后死亡的情况，就可以唯一确定一个水桶是有毒的。<br>所以总结：</p>
 <p>可以有的最大水桶数为：（t + 1）<sup>n</sup>个</p>
@@ -804,5 +812,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

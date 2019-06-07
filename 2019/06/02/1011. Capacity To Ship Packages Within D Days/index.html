@@ -365,7 +365,8 @@ A ship capacity of 15 is the minimum to ship all the packages in 5 days like thi
 4th day: 9
 5th day: 10
 
-Note that the cargo must be shipped in the order given, so using a ship of capacity 14 and splitting the packages into parts like (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) is not allowed. </code></pre><h3 id="解答："><a href="#解答：" class="headerlink" title="解答："></a>解答：</h3><p>这道题用二分查找法，二分查找的左边是最重包裹的重量，二分查找的右边是所有包裹的重量和。</p>
+Note that the cargo must be shipped in the order given, so using a ship of capacity 14 and splitting the packages into parts like (2, 3, 4, 5), (1, 6, 7), (8), (9), (10) is not allowed. 
+</code></pre><h3 id="解答："><a href="#解答：" class="headerlink" title="解答："></a>解答：</h3><p>这道题用二分查找法，二分查找的左边是最重包裹的重量，二分查找的右边是所有包裹的重量和。</p>
 <p>每次做二分查找的时候，判断查找的重量（也就是船的负载）是否能让船在<strong>D</strong>天内把货物送达。</p>
 <p>如果天数小于<strong>D</strong>，让<strong>左边=查找的重量+1</strong> 若天数大于等于<strong>D</strong>，让<strong>右边=查找的重量</strong>。</p>
 <p>最后得到的重量就是货物的负载量。</p>
@@ -758,5 +759,5 @@ Note that the cargo must be shipped in the order given, so using a ship of capac
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

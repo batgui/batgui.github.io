@@ -356,14 +356,9 @@
       
         <h1 id="用Python来实现Base64编码和解码"><a href="#用Python来实现Base64编码和解码" class="headerlink" title="用Python来实现Base64编码和解码"></a>用Python来实现Base64编码和解码</h1><p>&nbsp; &nbsp; &nbsp; &nbsp;Base64是一种常见的编码和解码方式，Base64用7 bits的可打印字符来表示8-bit的二进制数据。base64在HTTP和XML上用的特别多，许多HTTP传输和email中都用到了Base64进行编码和解码。</p>
 <h2 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码"></a>Base64编码</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;Based64 编码是把二进制数据转化为只有64个字符的过程。这64个字符分别是A-Z, a-z, 0-9, +和/</p>
-<h3 id="Python代码实现"><a href="#Python代码实现" class="headerlink" title="Python代码实现"></a>Python代码实现</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;假设我们要encode一段音频，我们用如下代码进行encode。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">mp3 = open(<span class="string">'Sample.mp4'</span>,<span class="string">'rb'</span>).read();</span><br><span class="line">mp3_encode = base64.encodebytes(mp3);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Base64解码"><a href="#Base64解码" class="headerlink" title="Base64解码"></a>Base64解码</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;Base64解码是把可打印字符转化为二进制的过程。<br>&nbsp; &nbsp; &nbsp; &nbsp;用如下代码解码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base64.decodebytes(s)</span><br></pre></td></tr></table></figure>
-
+<h3 id="Python代码实现"><a href="#Python代码实现" class="headerlink" title="Python代码实现"></a>Python代码实现</h3><p>&nbsp; &nbsp; &nbsp; &nbsp;假设我们要encode一段音频，我们用如下代码进行encode。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">mp3 = open(<span class="string">'Sample.mp4'</span>,<span class="string">'rb'</span>).read();</span><br><span class="line">mp3_encode = base64.encodebytes(mp3);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Base64解码"><a href="#Base64解码" class="headerlink" title="Base64解码"></a>Base64解码</h2><p>&nbsp; &nbsp; &nbsp; &nbsp;Base64解码是把可打印字符转化为二进制的过程。<br>&nbsp; &nbsp; &nbsp; &nbsp;用如下代码解码。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base64.decodebytes(s)</span><br></pre></td></tr></table></figure></p>
 <h2 id="总代码"><a href="#总代码" class="headerlink" title="总代码"></a>总代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">mp3 = open(<span class="string">'Sample.mp4'</span>,<span class="string">'rb'</span>).read();</span><br><span class="line">mp3_encode = base64.encodebytes(mp3);</span><br><span class="line">mp3_decode = base64.decodebytes(mp3_encode)</span><br><span class="line">mp3_result = open(<span class="string">'Sample_decode.mp4'</span>, <span class="string">'wb'</span>)</span><br><span class="line">mp3_result.write(mp3_decode)</span><br></pre></td></tr></table></figure>
-
 <p>&nbsp; &nbsp; &nbsp; &nbsp;计算这两个文件的MD5值<br><img src="https://user-images.githubusercontent.com/20705797/59079416-4451ad00-8916-11e9-97a2-25f6be9501f5.png" alt="base64"><br>&nbsp; &nbsp; &nbsp; &nbsp;可以看到这两个文件的MD5是相同的。</p>
 
       
@@ -752,5 +747,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

@@ -358,30 +358,36 @@
 <h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1:"></a>Example 1:</h3><pre><code>nums1 = [1, 3]
 nums2 = [2]
 
-The median is 2.0</code></pre><h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2:"></a>Example 2:</h3><pre><code>nums1 = [1, 2]
+The median is 2.0
+</code></pre><h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2:"></a>Example 2:</h3><pre><code>nums1 = [1, 2]
 nums2 = [3, 4]
 
-The median is (2 + 3)/2 = 2.5</code></pre><h3 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h3><p>中位数是整个序列从小到大排列，位置处于最终间的数。</p>
+The median is (2 + 3)/2 = 2.5
+</code></pre><h3 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h3><p>中位数是整个序列从小到大排列，位置处于最终间的数。</p>
 <p>本道题是求两个已经排好序的数组的中位数</p>
 <p>假设一个数组为<strong>A</strong>，另一个数组为<strong>B</strong></p>
 <p>那么中位数把数组<strong>A</strong>，<strong>B</strong>的左边和右边分为两块，让左边的大小和右边的大小相等。</p>
 <p>如下图所示。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
 <th>左边</th>
-<th align="center">右边</th>
+<th style="text-align:center">右边</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>A[0], A[1], …, A[i-1]</strong></td>
-<td align="center"><strong>A[i], A[i+1], …, A[m-1]</strong></td>
+<td style="text-align:center"><strong>A[i], A[i+1], …, A[m-1]</strong></td>
 </tr>
 <tr>
 <td><strong>B[0], B[1], …, B[j-1]</strong></td>
-<td align="center"><strong>B[j], B[j+1], …, B[n-1]</strong></td>
+<td style="text-align:center"><strong>B[j], B[j+1], …, B[n-1]</strong></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>其中<strong>A[i-1]</strong> 小于 <strong>A[i]</strong>（已知），<strong>B[j-1]</strong> 小于 <strong>B[j]</strong>（已知）， <strong>A[i-1]</strong>小于<strong>B[j]</strong>，<strong>B[j-1]</strong>小于<strong>A[i]</strong></p>
 <p>假设数组A的长度为<strong>m</strong>，数组B的长度为<strong>n</strong> ,<strong>m</strong>的左边有<strong>i</strong>个，<strong>n</strong>的左边有<strong>j</strong>个，则<strong>i + j = m - i + n - j + 1</strong>，所以j = $\frac{m + n + 1}{2} - i$</p>
 <p>为了保证<strong>j &gt; 0</strong>，我们需要保证$\frac{m + n + 1}{2} - i$，所以我们需要保证<strong>m</strong>小于<strong>n</strong>。</p>
@@ -779,5 +785,5 @@ The median is (2 + 3)/2 = 2.5</code></pre><h3 id="解答"><a href="#解答" clas
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
